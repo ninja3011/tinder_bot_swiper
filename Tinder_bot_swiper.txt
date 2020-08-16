@@ -1,0 +1,13 @@
+select login button click	
+email box type 
+password type 
+login button click
+
+dependencies:
+chromedriver.chromium.org
+
+
+
+py -m venv virtualenv: Creating virtual environment
+.\virtualenv\Scripts\activate: activating it
+python -m pip install selenium: Install Selenium: Our second dependency
