@@ -74,9 +74,12 @@ class tinder_bot_swiper():
         sleep(random.randint(0,3))
         dislike_btn=self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div[1]/div[2]/div[2]/button')
         dislike_btn.click()
-
-
-
+    def close_tinder_add_HS(self):
+        popup_close=self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[2]/button[2]')
+        popup_close.click()
+    def close_match(self):
+        match_close= self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
+        match_close.click()
 
 
 #creating the bot for the interface to run 
@@ -93,13 +96,15 @@ for i in a:
             bot.like()
         else:
             bot.dislike()
-    except: 
+    except Exception: 
+        sleep(2)
         try:
-            sleep(5)
-            popup_close=self.driver.find_element_by_xpath('//*[@id="modal-manager"]/div/div/div[2]/button[2]')
-            popup_close.click()
-        except:
-            print('match window xpath not gotten yet')
+            bot.close_tinder_add_HS()
+        except Exception:
+            bot.close_match()
+        
+        
+
 
 
 
