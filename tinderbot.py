@@ -11,7 +11,7 @@ from credentials import emailID,password
 #from selenium.webdriver.support import expected_conditions as EC
 import random
 
-
+i=1
 
 class tinder_bot_swiper():
     def __init__(self):
@@ -37,7 +37,8 @@ class tinder_bot_swiper():
         #Solution use driver.window_handles to get IDs for both windows
         #use driver.switch_to_window to switch to the popup window
         base_window = self.driver.window_handles[0]
-        self.driver.switch_to_window(self.driver.window_handles[1])
+        if(len(self.driver.window_handles)>1):
+            self.driver.switch_to_window(self.driver.window_handles[1])
         
         #entering our email IDs into the textbox, same process
         emailtext=self.driver.find_element_by_xpath('//*[@id="identifierId"]')
@@ -54,7 +55,7 @@ class tinder_bot_swiper():
         #clicking next button on password window
         next_btn_pass=self.driver.find_element_by_xpath('//*[@id="passwordNext"]/div/button/div[2]')
         next_btn_pass.click()
-        sleep(5)
+        sleep(3)
 
         self.driver.switch_to.window(self.driver.window_handles[0])
         sleep(5)
@@ -67,11 +68,11 @@ class tinder_bot_swiper():
         accept_btn.click()
 
     def like(self):
-        sleep(random.randint(0,4))
+        sleep(random.randint(0,2))
         like_btn=self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div[1]/div[2]/div[4]/button')
         like_btn.click()
     def dislike(self):
-        sleep(random.randint(0,3))
+        sleep(random.randint(0,2))
         dislike_btn=self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div[1]/div[1]/div[2]/div[2]/button')
         dislike_btn.click()
     def close_tinder_add_HS(self):
@@ -80,29 +81,58 @@ class tinder_bot_swiper():
     def close_match(self):
         match_close= self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
         match_close.click()
+    def messaging(self):
+        for i in [2,3,4,5,6,7,8,9,10]:
+            sleep(1)
+            messages_tab=  self.driver.find_element_by_xpath('//*[@id="messages-tab"]')
+            messages_tab.click()
+            chatlink = self.driver.find_element_by_xpath('//*[@id="matchListWithMessages"]/div[2]/a[%d]'%i)
+            chatlink.click()
+            textarea=self.driver.find_element_by_xpath('//*[@id="chat-text-area"]')
+            textarea.send_keys('hola')
+            sendmsg=self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div/div[1]/div/div/div[3]/form/button')
+            sendmsg.click()
+
+
+
+
+
+
 
 
 #creating the bot for the interface to run 
 bot = tinder_bot_swiper()
 bot.login()
+sleep(3)
 
 
-
-a = [0,1,2,3,4,5,6,7,8,9]
+a = [0,1,2,3,4]
 for i in a:
-    n = random.randint(0,9)
+    n = random.randint(0,4)
+
     try:
         if((n*2)>4):
             bot.like()
         else:
             bot.dislike()
     except Exception: 
-        sleep(2)
+        sleep(1)
         try:
             bot.close_tinder_add_HS()
         except Exception:
             bot.close_match()
-        
+flag=0
+while(flag==0):
+    try:
+        bot.messaging()
+        flag=1
+    except Exception:
+        try:
+            bot.close_tinder_add_HS()
+        except Exception:
+            bot.close_match()    
+
+
         
 
 
