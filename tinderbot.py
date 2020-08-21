@@ -6,13 +6,11 @@
 from selenium import webdriver
 from time import sleep
 from credentials import emailID,password
-#from selenium.webdriver.support.ui import WebDriverWait       
-#from selenium.webdriver.common.by import By       
-#from selenium.webdriver.support import expected_conditions as EC
 import random
+import sys
 
 i=1
-
+args=sys.argv
 class tinder_bot_swiper():
     def __init__(self):
         #self is basically self= tinder_bot_swiper() in principle
@@ -82,14 +80,14 @@ class tinder_bot_swiper():
         match_close= self.driver.find_element_by_xpath('//*[@id="modal-manager-canvas"]/div/div/div[1]/div/div[3]/a')
         match_close.click()
     def messaging(self):
-        for i in [2,3,4,5,6,7,8,9,10]:
+        for i in list(range(2,(int(args[2])+1))):
             sleep(1)
             messages_tab=  self.driver.find_element_by_xpath('//*[@id="messages-tab"]')
             messages_tab.click()
-            chatlink = self.driver.find_element_by_xpath('//*[@id="matchListWithMessages"]/div[2]/a[%d]'%i)
+            chatlink = self.driver.find_element_by_xpath('//*[@id="matchListWithMessages"]/div[2]/a[%d]'%int(i))
             chatlink.click()
             textarea=self.driver.find_element_by_xpath('//*[@id="chat-text-area"]')
-            textarea.send_keys('hola')
+            textarea.send_keys('How are you?')
             sendmsg=self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div/div[1]/div/div/div[3]/form/button')
             sendmsg.click()
 
@@ -106,8 +104,8 @@ bot.login()
 sleep(3)
 
 
-a = [0,1,2,3,4]
-for i in a:
+
+for i in list(range(1, int(args[1]))):
     n = random.randint(0,4)
 
     try:
@@ -121,6 +119,7 @@ for i in a:
             bot.close_tinder_add_HS()
         except Exception:
             bot.close_match()
+
 flag=0
 while(flag==0):
     try:
