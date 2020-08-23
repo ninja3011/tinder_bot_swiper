@@ -40,7 +40,11 @@ class tinder_bot_swiper():
         
         #entering our email IDs into the textbox, same process
         emailtext=self.driver.find_element_by_xpath('//*[@id="identifierId"]')
-        emailtext.send_keys(emailID)
+        try:
+            emailtext.send_keys(sys.argv[4])
+            print('try email')
+        except Exception:
+            emailtext.send_keys(emailID)
         #clicking the next button
         next_btn=self.driver.find_element_by_xpath('//*[@id="identifierNext"]/div/button/div[2]')
         next_btn.click()
@@ -48,7 +52,11 @@ class tinder_bot_swiper():
 
         #entering the password
         passtext = self.driver.find_element_by_xpath('//*[@id="password"]/div[1]/div/div[1]/input')
-        passtext.send_keys(password)
+        try:
+            passtext.send_keys(sys.argv[5])
+            print('try pass')
+        except Exception:
+            passtext.send_keys(password)
 
         #clicking next button on password window
         next_btn_pass=self.driver.find_element_by_xpath('//*[@id="passwordNext"]/div/button/div[2]')
@@ -87,7 +95,11 @@ class tinder_bot_swiper():
             chatlink = self.driver.find_element_by_xpath('//*[@id="matchListWithMessages"]/div[2]/a[%d]'%int(i))
             chatlink.click()
             textarea=self.driver.find_element_by_xpath('//*[@id="chat-text-area"]')
-            textarea.send_keys('How are you?')
+            try:
+                textarea.send_keys(sys.argv[3])
+                print('try msg')
+            except Exception:
+                textarea.send_keys('How are you?')
             sendmsg=self.driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/main/div[1]/div/div/div/div[1]/div/div/div[3]/form/button')
             sendmsg.click()
 
